@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: 'Impressum | Florian Dietze Versicherungen',
 };
@@ -9,8 +11,8 @@ export default function Impressum() {
     <main className="legal-page">
       <header className="legal-header">
         <a className="brand" href="/" aria-label="Zur Startseite">
-          <span className="brand-mark">FD</span>
-          <span><strong>Florian Dietze</strong><small>Versicherungen · Augsburg</small></span>
+          <img className="arag-logo" src="/assets/arag-logo.svg" alt="ARAG" />
+          <span><strong>Florian Dietze</strong><small>ARAG Generalagentur · Augsburg</small></span>
         </a>
         <a className="text-link" href="/">← Zurück zur Startseite</a>
       </header>

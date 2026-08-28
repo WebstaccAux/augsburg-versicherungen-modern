@@ -3,19 +3,19 @@
 import { useEffect, useState } from 'react';
 
 const services = [
-  { no: '01', icon: '⌂', title: 'Privatrechtsschutz', tag: 'Privat & Familie', text: 'Sicherheit im Alltag, im Beruf, im Verkehr und rund ums Wohnen – passend zu Ihrer Lebenssituation.' },
-  { no: '02', icon: '⌑', title: 'Vermieterrechtsschutz', tag: 'Immobilien', text: 'Klare Absicherung bei Mietausfällen, Streit mit Mietern und Konflikten rund um Ihre Immobilie.' },
-  { no: '03', icon: '◫', title: 'Firmenrechtsschutz', tag: 'Unternehmen', text: 'Rechtliche Rückendeckung für Betriebe – von Arbeitsrecht bis Vertrags- und Steuerrechtsschutz.' },
-  { no: '04', icon: '◇', title: 'Managerrechtsschutz', tag: 'Verantwortung', text: 'Persönlicher Schutz für Geschäftsführer, Vorstände und leitende Angestellte bei hoher Verantwortung.' },
-  { no: '05', icon: '◎', title: 'IT-Versicherungen', tag: 'Cyber & Technik', text: 'Individuelle Absicherung gegen Cyberrisiken, Datenverlust und digitale Betriebsunterbrechungen.' },
-  { no: '06', icon: '＋', title: 'Private Krankenversicherung', tag: 'Gesundheit', text: 'Leistungsstarke Versorgung, verständlich verglichen und langfristig auf Ihre Pläne abgestimmt.' },
-  { no: '07', icon: '↗', title: 'Altersvorsorge 2027', tag: 'Zukunft', text: 'Vorausschauende Vorsorge mit einem Konzept, das zu Einkommen, Familie und Ruhestandsziel passt.' },
+  { no: '01', icon: 'PR', title: 'Privatrechtsschutz', tag: 'Privat & Familie', text: 'Sicherheit im Alltag, im Beruf, im Verkehr und rund ums Wohnen – passend zu Ihrer Lebenssituation.' },
+  { no: '02', icon: 'VR', title: 'Vermieterrechtsschutz', tag: 'Immobilien', text: 'Klare Absicherung bei Mietausfällen, Streit mit Mietern und Konflikten rund um Ihre Immobilie.' },
+  { no: '03', icon: 'FR', title: 'Firmenrechtsschutz', tag: 'Unternehmen', text: 'Rechtliche Rückendeckung für Betriebe – von Arbeitsrecht bis Vertrags- und Steuerrechtsschutz.' },
+  { no: '04', icon: 'MR', title: 'Managerrechtsschutz', tag: 'Verantwortung', text: 'Persönlicher Schutz für Geschäftsführer, Vorstände und leitende Angestellte bei hoher Verantwortung.' },
+  { no: '05', icon: 'IT', title: 'IT-Versicherungen', tag: 'Cyber & Technik', text: 'Individuelle Absicherung gegen Cyberrisiken, Datenverlust und digitale Betriebsunterbrechungen.' },
+  { no: '06', icon: 'PK', title: 'Private Krankenversicherung', tag: 'Gesundheit', text: 'Leistungsstarke Versorgung, verständlich verglichen und langfristig auf Ihre Pläne abgestimmt.' },
+  { no: '07', icon: 'AV', title: 'Altersvorsorge 2027', tag: 'Zukunft', text: 'Vorausschauende Vorsorge mit einem Konzept, das zu Einkommen, Familie und Ruhestandsziel passt.' },
 ];
 
 const benefits = [
-  { icon: '⚖', title: 'Waffengleichheit', text: 'Streiten Sie auf Augenhöhe – egal ob gegen Konzerne, Behörden oder den Nachbarn.' },
-  { icon: '◉', title: 'Voller Kostenschutz', text: 'Keine Angst vor hohen Anwalts- und Gerichtskosten. Dieses Risiko nimmt Ihnen der passende Schutz ab.' },
-  { icon: '⌁', title: 'Smarte Konfliktlösung', text: 'Oft helfen Mediation oder ein klärendes Gespräch. Ich zeige Ihnen den schnellsten Weg zur Lösung.' },
+  { icon: '§', title: 'Waffengleichheit', text: 'Streiten Sie auf Augenhöhe – egal ob gegen Konzerne, Behörden oder den Nachbarn.' },
+  { icon: '€', title: 'Voller Kostenschutz', text: 'Keine Angst vor hohen Anwalts- und Gerichtskosten. Dieses Risiko nimmt Ihnen der passende Schutz ab.' },
+  { icon: '↗', title: 'Smarte Konfliktlösung', text: 'Oft helfen Mediation oder ein klärendes Gespräch. Ich zeige Ihnen den schnellsten Weg zur Lösung.' },
 ];
 
 const reviews = [
@@ -78,8 +78,8 @@ export default function Home() {
       <div className="scroll-progress" aria-hidden="true" />
       <header className="site-header">
         <a className="brand" href="#top" onClick={closeMenu} aria-label="Florian Dietze Versicherungen – Startseite">
-          <span className="brand-mark">FD</span>
-          <span><strong>Florian Dietze</strong><small>Versicherungen · Augsburg</small></span>
+          <img className="arag-logo" src="/assets/arag-logo.svg" alt="ARAG" />
+          <span><strong>Florian Dietze</strong><small>ARAG Generalagentur · Augsburg</small></span>
         </a>
         <nav className={menuOpen ? 'is-open' : ''} aria-label="Hauptnavigation">
           <a href="#leistungen" onClick={closeMenu}>Leistungen</a>
@@ -276,7 +276,7 @@ export default function Home() {
       </section>
 
       <footer className="site-footer">
-        <a className="brand footer-brand" href="#top"><span className="brand-mark">FD</span><span><strong>Florian Dietze</strong><small>Versicherungen · Augsburg</small></span></a>
+        <a className="brand footer-brand" href="#top"><img className="arag-logo" src="/assets/arag-logo.svg" alt="ARAG" /><span><strong>Florian Dietze</strong><small>ARAG Generalagentur · Augsburg</small></span></a>
         <div className="footer-links"><a href="#leistungen">Leistungen</a><a href="#ueber-mich">Über mich</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a></div>
         <div className="footer-social"><a href="https://www.facebook.com/ARAG.Florian.Dietze/" target="_blank" rel="noreferrer">Facebook ↗</a><a href="https://www.instagram.com/dein_rechtsschutz/" target="_blank" rel="noreferrer">Instagram ↗</a><a href="https://www.youtube.com/channel/UCSlMrmGLg4Bf0DFiwiSOp-Q" target="_blank" rel="noreferrer">YouTube ↗</a></div>
         <div className="footer-bottom"><span>© 2026 Florian Dietze Versicherungen</span><span><a href="/impressum">Impressum</a><a href="https://www.augsburg-versicherungen.de/datenschutz" target="_blank" rel="noreferrer">Datenschutz ↗</a></span></div>

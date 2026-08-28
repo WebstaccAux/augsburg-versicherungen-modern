@@ -1,5 +1,5 @@
 {
-  "name": "sites-project",
+  "name": "augsburg-versicherungen-modern",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vinext dev",
     "build": "vinext build",
+    "build:ionos": "IONOS_STATIC_EXPORT=1 vinext build",
     "start": "vinext start",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next"
   },
