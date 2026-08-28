@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 export const dynamic = 'force-static';
 
 export const metadata: Metadata = {
-  title: 'Impressum | Florian Dietze Versicherungen',
+  title: 'Impressum',
 };
 
 export default function Impressum() {
