@@ -62,20 +62,36 @@ export default function Home() {
       const progress = max > 0 ? window.scrollY / max : 0;
       document.documentElement.style.setProperty('--scroll-progress', String(progress));
       document.documentElement.style.setProperty('--hero-shift', `${Math.min(window.scrollY * .12, 80)}px`);
+      document.documentElement.style.setProperty('--scene-scroll', `${window.scrollY}px`);
+    };
+    const updatePointer = (event: PointerEvent) => {
+      const x = (event.clientX / window.innerWidth - .5) * 2;
+      const y = (event.clientY / window.innerHeight - .5) * 2;
+      document.documentElement.style.setProperty('--pointer-x', x.toFixed(3));
+      document.documentElement.style.setProperty('--pointer-y', y.toFixed(3));
     };
     updateScroll();
     window.addEventListener('scroll', updateScroll, { passive: true });
+    window.addEventListener('pointermove', updatePointer, { passive: true });
     return () => {
       observer.disconnect();
       window.removeEventListener('scroll', updateScroll);
+      window.removeEventListener('pointermove', updatePointer);
     };
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <main>
+    <main className="site-shell">
       <div className="scroll-progress" aria-hidden="true" />
+      <div className="ambient-scene" aria-hidden="true">
+        <span className="ambient-orbit orbit-large" />
+        <span className="ambient-orbit orbit-small" />
+        <span className="ambient-sphere sphere-yellow" />
+        <span className="ambient-sphere sphere-glass" />
+      </div>
+      <div className="flow-spine" aria-hidden="true"><span /><span /><span /></div>
       <header className="site-header">
         <a className="brand" href="#top" onClick={closeMenu} aria-label="Florian Dietze Versicherungen – Startseite">
           <img className="arag-logo" src="/assets/arag-logo.svg" alt="ARAG" />
@@ -144,6 +160,7 @@ export default function Home() {
       </section>
 
       <section className="services-section" id="leistungen">
+        <div className="services-depth" aria-hidden="true"><span /><span /></div>
         <div className="section-heading inverse reveal">
           <p className="section-kicker">Leistungen</p>
           <h2>Welcher Schutz passt<br /><em>zu Ihrem Leben?</em></h2>
@@ -163,6 +180,7 @@ export default function Home() {
       </section>
 
       <section className="about-section" id="ueber-mich">
+        <div className="about-depth" aria-hidden="true"><span /></div>
         <div className="about-image reveal">
           <img src="/assets/florian-dietze.jpg" alt="Florian Dietze bei der persönlichen Beratung" />
           <div className="image-badge"><span>FD</span><p>Ihr Partner<br /><strong>auf Augenhöhe.</strong></p></div>
@@ -182,6 +200,7 @@ export default function Home() {
       </section>
 
       <section className="reviews-section" id="bewertungen">
+        <div className="reviews-halo" aria-hidden="true" />
         <div className="reviews-heading reveal">
           <div>
             <p className="section-kicker">Kundenstimmen</p>
@@ -204,6 +223,7 @@ export default function Home() {
       </section>
 
       <section className="process-section">
+        <div className="process-ribbon" aria-hidden="true" />
         <div className="section-heading reveal">
           <p className="section-kicker">So funktioniert’s</p>
           <h2>In drei Schritten<br /><em>zum passenden Schutz.</em></h2>
