@@ -190,7 +190,7 @@ export default function Home() {
         </div>
         <div className="hero-visual">
           <div className="portrait-frame">
-            <img src="/assets/florian-dietze.jpg" alt="Florian Dietze, Versicherungsspezialist in Augsburg" />
+            <img src="/assets/florian-dietze.jpg" alt="Florian Dietze, Versicherungsspezialist in Augsburg" width={907} height={1360} />
           </div>
           <div className="availability"><i /> Persönlich erreichbar</div>
           <div className="experience"><strong>19</strong><span>Jahre<br />Erfahrung</span></div>
@@ -244,7 +244,7 @@ export default function Home() {
       <section className="about-section scene-panel" id="ueber-mich" data-scene data-scene-label="Über mich">
         <div className="about-depth" aria-hidden="true"><span /></div>
         <div className="about-image reveal">
-          <img src="/assets/florian-dietze.jpg" alt="Florian Dietze bei der persönlichen Beratung" />
+          <img src="/assets/florian-dietze.jpg" alt="Florian Dietze bei der persönlichen Beratung" width={907} height={1360} loading="lazy" />
           <div className="image-badge"><span>FD</span><p>Ihr Partner<br /><strong>auf Augenhöhe.</strong></p></div>
         </div>
         <div className="about-copy reveal">
@@ -349,7 +349,7 @@ export default function Home() {
           </div>
         </div>
         <div className="contact-card reveal">
-          <div className="contact-person"><img src="/assets/florian-dietze.jpg" alt="Florian Dietze" /><span><i /> Persönlich für Sie da</span></div>
+          <div className="contact-person"><img src="/assets/florian-dietze.jpg" alt="Florian Dietze" width={907} height={1360} loading="lazy" /><span><i /> Persönlich für Sie da</span></div>
           <a href="tel:+4982147865935"><small>Festnetz</small><strong>0821 478 659 35</strong><span>↗</span></a>
           <a href="https://wa.me/491735734715" target="_blank" rel="noreferrer"><small>Mobil / WhatsApp</small><strong>0173 573 4715</strong><span>↗</span></a>
           <a href="mailto:florian.dietze@augsburg-versicherungen.de"><small>E-Mail</small><strong>florian.dietze@augsburg-versicherungen.de</strong><span>↗</span></a>
@@ -361,7 +361,7 @@ export default function Home() {
         <a className="brand footer-brand" href="#top"><img className="arag-logo" src="/assets/arag-logo.svg" alt="ARAG" /><span><strong>Florian Dietze</strong><small>ARAG Generalagentur · Augsburg</small></span></a>
         <div className="footer-links"><a href="#leistungen">Leistungen</a><a href="#ueber-mich">Über mich</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a></div>
         <div className="footer-social"><a href="https://www.facebook.com/ARAG.Florian.Dietze/" target="_blank" rel="noreferrer">Facebook ↗</a><a href="https://www.instagram.com/dein_rechtsschutz/" target="_blank" rel="noreferrer">Instagram ↗</a><a href="https://www.youtube.com/channel/UCSlMrmGLg4Bf0DFiwiSOp-Q" target="_blank" rel="noreferrer">YouTube ↗</a></div>
-        <div className="footer-bottom"><span>© 2026 Florian Dietze Versicherungen</span><span><a href="/impressum">Impressum</a><a href="https://www.augsburg-versicherungen.de/datenschutz" target="_blank" rel="noreferrer">Datenschutz ↗</a></span></div>
+        <div className="footer-bottom"><span>© 2026 Florian Dietze Versicherungen</span><span><a href="/impressum">Impressum</a><a href="/datenschutz">Datenschutz</a></span></div>
       </footer>
 
       <a className="whatsapp-float" href="https://wa.me/491735734715" target="_blank" rel="noreferrer" aria-label="Auf WhatsApp schreiben"><span>✆</span><small>WhatsApp</small></a>
