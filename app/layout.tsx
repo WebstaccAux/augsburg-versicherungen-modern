@@ -1,6 +1,44 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
+const heroReliabilityStyles = `
+  .hero-copy,
+  .hero-visual,
+  .experience {
+    animation: none !important;
+  }
+
+  .hero .eyebrow,
+  .hero h1,
+  .hero h1 em,
+  .hero-intro,
+  .hero-actions,
+  .trust-row,
+  .hero-visual {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero h1,
+  .hero h1 em {
+    color: #050505 !important;
+  }
+
+  .hero-visual {
+    transition: none !important;
+    transform-style: flat !important;
+  }
+
+  .portrait-frame {
+    transform: none !important;
+  }
+
+  .availability,
+  .experience {
+    z-index: 6 !important;
+  }
+`;
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.augsburg-versicherungen.de'),
   title: {
@@ -46,6 +84,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de">
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: heroReliabilityStyles }} />
+      </head>
       <body>{children}</body>
     </html>
   );
