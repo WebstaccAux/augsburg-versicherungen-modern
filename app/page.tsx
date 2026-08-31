@@ -52,30 +52,81 @@ export default function Home() {
 
   useEffect(() => {
     const reveals = document.querySelectorAll('.reveal');
+    const scenes = document.querySelectorAll<HTMLElement>('[data-scene]');
+    const root = document.documentElement;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add('is-visible'));
     }, { threshold: 0.12 });
     reveals.forEach((element) => observer.observe(element));
 
-    const updateScroll = () => {
+    let frame = 0;
+    let lastY = window.scrollY;
+    let lastTime = performance.now();
+    let smoothVelocity = 0;
+    const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+
+    const renderScroll = (time = performance.now()) => {
+      const currentY = window.scrollY;
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = max > 0 ? window.scrollY / max : 0;
-      document.documentElement.style.setProperty('--scroll-progress', String(progress));
-      document.documentElement.style.setProperty('--hero-shift', `${Math.min(window.scrollY * .12, 80)}px`);
-      document.documentElement.style.setProperty('--scene-scroll', `${window.scrollY}px`);
+      const progress = max > 0 ? currentY / max : 0;
+      const elapsed = Math.max(16, time - lastTime);
+      const instantVelocity = (currentY - lastY) / elapsed;
+      smoothVelocity += (instantVelocity - smoothVelocity) * .16;
+      root.style.setProperty('--scroll-progress', String(progress));
+      root.style.setProperty('--hero-progress', String(clamp(currentY / (window.innerHeight * .92))));
+      root.style.setProperty('--hero-shift', `${Math.min(currentY * .12, 92)}px`);
+      root.style.setProperty('--scene-scroll', `${currentY}px`);
+      root.style.setProperty('--scroll-velocity', String(clamp(Math.abs(smoothVelocity), 0, 2.4)));
+
+      let activeScene = 0;
+      let activeDistance = Number.POSITIVE_INFINITY;
+      scenes.forEach((scene, index) => {
+        const rect = scene.getBoundingClientRect();
+        const sceneProgress = clamp((window.innerHeight - rect.top) / (window.innerHeight + rect.height));
+        const sceneCenter = clamp((window.innerHeight * .5 - (rect.top + rect.height * .5)) / window.innerHeight, -1, 1);
+        scene.style.setProperty('--scene-progress', sceneProgress.toFixed(4));
+        scene.style.setProperty('--scene-center', sceneCenter.toFixed(4));
+        const distance = Math.abs(rect.top + rect.height * .5 - window.innerHeight * .5);
+        if (distance < activeDistance) {
+          activeDistance = distance;
+          activeScene = index;
+        }
+      });
+
+      scenes.forEach((scene, index) => scene.classList.toggle('is-active-scene', index === activeScene));
+      const indexNode = document.querySelector<HTMLElement>('.scroll-scene-index');
+      const nameNode = document.querySelector<HTMLElement>('.scroll-scene-name');
+      if (indexNode) indexNode.textContent = String(activeScene + 1).padStart(2, '0');
+      if (nameNode) nameNode.textContent = scenes[activeScene]?.dataset.sceneLabel ?? 'Start';
+
+      lastY = currentY;
+      lastTime = time;
+    };
+    const requestScrollRender = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame((time) => {
+        frame = 0;
+        renderScroll(time);
+      });
     };
     const updatePointer = (event: PointerEvent) => {
+      if (reducedMotion.matches) return;
       const x = (event.clientX / window.innerWidth - .5) * 2;
       const y = (event.clientY / window.innerHeight - .5) * 2;
-      document.documentElement.style.setProperty('--pointer-x', x.toFixed(3));
-      document.documentElement.style.setProperty('--pointer-y', y.toFixed(3));
+      root.style.setProperty('--pointer-x', x.toFixed(3));
+      root.style.setProperty('--pointer-y', y.toFixed(3));
     };
-    updateScroll();
-    window.addEventListener('scroll', updateScroll, { passive: true });
+    root.classList.toggle('motion-reduced', reducedMotion.matches);
+    renderScroll();
+    window.addEventListener('scroll', requestScrollRender, { passive: true });
+    window.addEventListener('resize', requestScrollRender, { passive: true });
     window.addEventListener('pointermove', updatePointer, { passive: true });
     return () => {
       observer.disconnect();
-      window.removeEventListener('scroll', updateScroll);
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', requestScrollRender);
+      window.removeEventListener('resize', requestScrollRender);
       window.removeEventListener('pointermove', updatePointer);
     };
   }, []);
@@ -90,6 +141,17 @@ export default function Home() {
         <span className="ambient-orbit orbit-small" />
         <span className="ambient-sphere sphere-yellow" />
         <span className="ambient-sphere sphere-glass" />
+      </div>
+      <div className="cinematic-stage" aria-hidden="true">
+        <span className="depth-grid" />
+        <span className="light-beam beam-one" />
+        <span className="light-beam beam-two" />
+        <span className="scene-flare" />
+        <div className="scroll-hud">
+          <span className="scroll-scene-index">01</span>
+          <span className="hud-line"><i /></span>
+          <span className="scroll-scene-name">Start</span>
+        </div>
       </div>
       <div className="flow-spine" aria-hidden="true"><span /><span /><span /></div>
       <header className="site-header">
@@ -110,7 +172,7 @@ export default function Home() {
         </button>
       </header>
 
-      <section className="hero" id="top">
+      <section className="hero scene-panel" id="top" data-scene data-scene-label="Start">
         <div className="hero-ring ring-one" /><div className="hero-ring ring-two" /><div className="hero-glow" />
         <div className="hero-copy">
           <div className="eyebrow"><span /> Rechtsschutz-Spezialist in Augsburg</div>
@@ -141,7 +203,7 @@ export default function Home() {
         </div>
       </div>
 
-      <section className="section benefits-section">
+      <section className="section benefits-section scene-panel" data-scene data-scene-label="Warum Rechtsschutz">
         <div className="section-heading reveal">
           <p className="section-kicker">Warum Rechtsschutz?</p>
           <h2>Sicherheit, die Ihnen<br /><em>den Rücken freihält.</em></h2>
@@ -159,7 +221,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="services-section" id="leistungen">
+      <section className="services-section scene-panel" id="leistungen" data-scene data-scene-label="Leistungen">
         <div className="services-depth" aria-hidden="true"><span /><span /></div>
         <div className="section-heading inverse reveal">
           <p className="section-kicker">Leistungen</p>
@@ -179,7 +241,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="about-section" id="ueber-mich">
+      <section className="about-section scene-panel" id="ueber-mich" data-scene data-scene-label="Über mich">
         <div className="about-depth" aria-hidden="true"><span /></div>
         <div className="about-image reveal">
           <img src="/assets/florian-dietze.jpg" alt="Florian Dietze bei der persönlichen Beratung" />
@@ -199,7 +261,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="reviews-section" id="bewertungen">
+      <section className="reviews-section scene-panel" id="bewertungen" data-scene data-scene-label="Kundenstimmen">
         <div className="reviews-halo" aria-hidden="true" />
         <div className="reviews-heading reveal">
           <div>
@@ -222,7 +284,7 @@ export default function Home() {
         <p className="review-note reveal">Bewertungen stammen von Google, ProvenExpert, finanzen.de und einem eigenen, nur an tatsächlich beratene Kunden versendeten Bewertungsformular. <a href="https://www.provenexpert.com/arag-versicherungen-florian-dietze/" target="_blank" rel="noreferrer">Alle Bewertungen ansehen ↗</a></p>
       </section>
 
-      <section className="process-section">
+      <section className="process-section scene-panel" data-scene data-scene-label="Ablauf">
         <div className="process-ribbon" aria-hidden="true" />
         <div className="section-heading reveal">
           <p className="section-kicker">So funktioniert’s</p>
@@ -241,7 +303,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="faq-section" id="faq">
+      <section className="faq-section scene-panel" id="faq" data-scene data-scene-label="Häufige Fragen">
         <div className="faq-heading reveal">
           <p className="section-kicker">Häufige Fragen</p>
           <h2>Klar gefragt.<br /><em>Klar beantwortet.</em></h2>
@@ -260,7 +322,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="journal-section" id="wissen">
+      <section className="journal-section scene-panel" id="wissen" data-scene data-scene-label="Wissen">
         <div className="journal-heading reveal">
           <div><p className="section-kicker">Wissen</p><h2>Rechtsschutz.<br /><em>Einfach erklärt.</em></h2></div>
           <a className="text-link" href="https://www.augsburg-versicherungen.de/blog" target="_blank" rel="noreferrer">Alle Beiträge ansehen ↗</a>
@@ -275,7 +337,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="contact-section" id="kontakt">
+      <section className="contact-section scene-panel" id="kontakt" data-scene data-scene-label="Kontakt">
         <div className="contact-orb orb-a" /><div className="contact-orb orb-b" />
         <div className="contact-copy reveal">
           <p className="section-kicker">Kontakt</p>

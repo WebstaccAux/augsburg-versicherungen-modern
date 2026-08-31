@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 export const dynamic = 'force-static';
 
@@ -10,11 +11,11 @@ export default function Impressum() {
   return (
     <main className="legal-page">
       <header className="legal-header">
-        <a className="brand" href="/" aria-label="Zur Startseite">
+        <Link className="brand" href="/" aria-label="Zur Startseite">
           <img className="arag-logo" src="/assets/arag-logo.svg" alt="ARAG" />
           <span><strong>Florian Dietze</strong><small>ARAG Generalagentur · Augsburg</small></span>
-        </a>
-        <a className="text-link" href="/">← Zurück zur Startseite</a>
+        </Link>
+        <Link className="text-link" href="/">← Zurück zur Startseite</Link>
       </header>
       <article className="legal-content">
         <p className="section-kicker">Rechtliches</p>
