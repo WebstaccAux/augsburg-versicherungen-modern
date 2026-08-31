@@ -37,6 +37,47 @@ const heroReliabilityStyles = `
   .experience {
     z-index: 6 !important;
   }
+
+  .contact-section {
+    min-height: 680px !important;
+    padding-top: 86px !important;
+    padding-bottom: 86px !important;
+  }
+
+  .site-footer {
+    gap: 36px !important;
+    padding-top: 62px !important;
+  }
+
+  .footer-bottom {
+    margin-top: 10px !important;
+    padding-top: 24px !important;
+  }
+
+  @media (max-width: 860px) {
+    .contact-section {
+      min-height: auto !important;
+      gap: 54px !important;
+      padding-top: 92px !important;
+      padding-bottom: 78px !important;
+    }
+
+    .site-footer {
+      padding-top: 72px !important;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .contact-section {
+      padding-top: 78px !important;
+      padding-bottom: 66px !important;
+    }
+
+    .site-footer {
+      gap: 30px !important;
+      padding-top: 58px !important;
+    }
+  }
 `;
 
 export const metadata: Metadata = {
