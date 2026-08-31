@@ -30,6 +30,14 @@ const heroReliabilityStyles = `
   }
 
   .portrait-frame {
+    background: #1b1d21 !important;
+    transform: none !important;
+  }
+
+  .portrait-frame img {
+    object-fit: contain !important;
+    object-position: center center !important;
+    filter: saturate(.94) contrast(1.02) !important;
     transform: none !important;
   }
 
@@ -76,6 +84,66 @@ const heroReliabilityStyles = `
     .site-footer {
       gap: 30px !important;
       padding-top: 58px !important;
+    }
+  }
+
+  @keyframes ambientBreathe {
+    0%, 100% { filter: blur(.1px) brightness(1); }
+    50% { filter: blur(.1px) brightness(1.12); }
+  }
+
+  @keyframes glassBreathe {
+    0%, 100% { filter: blur(.1px) saturate(1); }
+    50% { filter: blur(.1px) saturate(1.35); }
+  }
+
+  .sphere-yellow {
+    animation: ambientBreathe 6.5s ease-in-out infinite !important;
+  }
+
+  .sphere-glass {
+    animation: glassBreathe 8s ease-in-out infinite reverse !important;
+  }
+
+  .button {
+    isolation: isolate;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .button::after {
+    content: '';
+    position: absolute;
+    inset: -70% auto -70% -42%;
+    width: 28%;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.7), transparent);
+    opacity: 0;
+    transform: skewX(-18deg);
+    transition: left .65s ease, opacity .25s ease;
+  }
+
+  .button:hover::after {
+    left: 116%;
+    opacity: .72;
+  }
+
+  .review-track:hover {
+    animation-play-state: paused;
+  }
+
+  .faq-item.is-open {
+    box-shadow: inset 3px 0 0 var(--arag-yellow);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sphere-yellow,
+    .sphere-glass {
+      animation: none !important;
+    }
+
+    .button::after {
+      display: none;
     }
   }
 `;
